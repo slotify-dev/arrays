@@ -1,10 +1,13 @@
 ### What is an Array?
 
-- Array is a collection of items of the same variable type (i.e. numbers, strings, etc...)
+- Array is a collection of items or elements
 - All the elements are stored in contiguous memory locations
 
 - Zero-Based Indexing → The first element is at index 0, not 1.
 - Contiguous Memory → Elements are stored back-to-back in memory.
+  - Let say that first element is stored at memory address of hexa decimal value 1000
+  - If we are storing numbers which is 4 byte next element will be 1000+4 = 1004 address
+  - Same formula for rest of the elements in array if you know memory address of one element you can find out their neighbors easily
 
 Important Terms:
 
@@ -19,8 +22,9 @@ Think of an array like a parking lot:
 - But if the lot is full, you can’t add more cars unless you build a bigger lot (resize the array).
 
 Arrays are stored in contiguous (sequential) memory locations.
-  - Array reference/address is stored in stack memory
-  - Array elements are stored in heap memory
+
+- Array reference/address is stored in stack memory
+- Array elements are stored in heap memory
 
 ```bash
 # Each int is 4 bytes, so addresses increment by 4.
@@ -34,46 +38,177 @@ arr[2] → 0x1000 + (2 * 4) = 0x1008
 1. One-Dimentional
 2. Multi-Dimentional
 
+```typescript
+const oneDimArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const twoDimArr = [
+  [1, 2, 3], // row 1
+  [4, 5, 6], // row 2
+  [7, 8, 9], // row 3
+];
+```
+
 ### Operations on Array
 
-1. Traversal: It is a process of accessing and processing each element of an array sequentially
-    - When an array is created, it occupies a contiguous block of memory where elements are stored in an indexed manner. 
-    - Each element can be accessed using its index, which starts from 0 in most programming languages.
+1. Updating Element
 
-    Types of Array Traversal:
-        - Sequential (Linear) Traversal
-        - Reverse Traversal
+It is process of updating element at given index.
 
-2. Insertion: It is a process of adding a new element at a specific position while maintaining the order of the existing elements.         
-   - create n+1 size array
-   - identify index where insert should happen
-   - shift element on right towards right by one position
-   - insert the element at index
-   - update the size of the array if required
+```typescript
+const numArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-   Types of Array Insertion:
-    - Insert at begining (at 0 index)
-    - Insert at specific index
-    - Insert at end of the array (at length - 1)
+function updateAtIndex(arr: number[], index: number, value: number) {
+  arr[index] = value;
+}
 
-3. Deletion: It is a process of removing an element from a specific position while maintaining the order of the remaining elements.      
-    - indentify index for Deletion
-    - move element from index on right to left by one position
-    - update the size if needed.
+// Time: O(1)
+// Space: O(1)
+numArr[0] = 12; // update value at index 0
+updateAtIndex(numArr, 0, 12); // update value at index 0
+```
 
-    Types of Array Deletion:
-        - Delete at begining (at 0 index)
-        - Delete at specific index
-        - Delete at end of the array (at length - 1)
+2. Accessing (Lookup)
 
-4. Searching: It is a process of finding a specific element in a given list of elements.    
+It is a process of accessing element from the array.
 
-    Types of Searching in an Array:
-        - Linear Searching
-        - Binary Searching
+```typescript
+// Time Complexity: O(1) - Direct access by index
+// Space Complexity: O(1) - No additional space needed
+const numArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-5. Sorting: It is a process of sorting array elements in asc or desc order.
+// 1. Direct Index Access
+// Time/Space: O(1)
+function getValueByIndex<T>(arr: T[], index: number): T | undefined {
+  return arr[index];
+}
 
-    Types of Sorting:
-        - ASC: ascending or increasing order
-        - DESC: decending or non-incresing order
+// 2. Linear Search by Value
+// Best Case: O(1) - Element is first in array
+// Average Case: O(n) - May need to check half the elements on average
+// Worst Case: O(n) - Element is last or not present
+function getIndexByValue<T>(arr: T[], element: T): number {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === element) return i;
+  }
+  return -1;
+}
+```
+
+3. Inserting or Adding
+
+It is a process of adding elements to the array.
+
+```typescript
+// 1. Insert at End
+// Average Time: O(1) - Most cases just adds to end
+// Worst Time: O(n) - When array needs resizing/copying
+// Space: O(1) (amortized)
+function insertAtEnd<T>(arr: T[], element: T): T[] {
+  const newArr = [...arr];
+  newArr[newArr.length] = element;
+  return newArr;
+}
+
+// 2. Insert at Beginning
+// Time: O(n) - Must move all existing elements
+// Space: O(n) - Creates new array
+function insertAtStart<T>(arr: T[], element: T): T[] {
+  const newArr = new Array(arr.length + 1);
+  newArr[0] = element;
+  for (let i = 0; i < arr.length; i++) {
+    newArr[i + 1] = arr[i];
+  }
+  return newArr;
+}
+
+// 3. Insert at Specific Index
+// Average Time: O(n) - Up to n elements may need shifting
+// Best Case: O(1) - When inserting at end
+// Worst Case: O(n) - When inserting at beginning
+function insertAtIndex<T>(arr: T[], index: number, element: T): T[] {
+  const newArr = new Array(arr.length + 1);
+
+  // process elements before index
+  for (let i = 0; i < index; i++) newArr[i] = arr[i];
+
+  // at the index
+  newArr[index] = element;
+
+  // process elements after index
+  for (let i = index; i < arr.length; i++) newArr[i + 1] = arr[i];
+
+  return newArr;
+}
+```
+
+4. Deleting or Removing
+
+It is a process of removing elements from the array.
+
+```javascript
+// 1. Remove from End
+// Time: O(1) - Just reduces length counter
+// Space: O(1) - No new allocation needed
+function removeFromEnd<T>(arr: T[]): T[] {
+  arr.length = arr.length - 1;
+}
+
+// 2. Remove from Beginning
+// Time: O(n) - Must move all remaining elements
+// Space: O(n) - Creates new array
+function removeFromStart<T>(arr: T[]): T[] {
+  const newArr = new Array(arr.length - 1);
+  for (let i = 1; i < arr.length; i++) {
+    newArr[i - 1] = arr[i];
+  }
+  return newArr;
+}
+
+// 3. Remove from Specific Index
+// Average Time: O(n) - May need to shift up to n elements
+// Best Case: O(1) - When removing from end
+// Worst Case: O(n) - When removing from beginning
+function removeAtIndex<T>(arr: T[], index: number): T[] {
+  const newArr = new Array(arr.length - 1);
+  for (let i = 0; i < index; i++) {
+    newArr[i] = arr[i];
+  }
+  for (let i = index + 1; i < arr.length; i++) {
+    newArr[i - 1] = arr[i];
+  }
+  return newArr;
+}
+```
+
+5. Searching
+
+It is a process of finding elements in the array.
+
+```javascript
+// 1. Linear Search (Unsorted Arrays)
+// Best Case: O(1) - First element matches
+// Average Case: O(n) - Checks ~n/2 elements on average
+// Worst Case: O(n) - Last element matches or not found
+function linearSearch<T>(arr: T[], target: T): number {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === target) return i;
+  }
+  return -1;
+}
+
+// 2. Binary Search (Sorted Arrays Only)
+// Time: O(log n) - Halves search space each iteration
+// Space: O(1) - Uses constant space
+function binarySearch(arr: number[], target: number): number {
+  let left = 0;
+  let right = arr.length - 1;
+
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+    if (arr[mid] === target) return mid;
+    if (arr[mid] < target) left = mid + 1;
+    else right = mid - 1;
+  }
+
+  return -1;
+}
+```

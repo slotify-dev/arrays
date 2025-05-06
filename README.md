@@ -1,5 +1,6 @@
 ### What is an Array?
 
+- Arrays are non-primitive data type
 - Array is a collection of items or elements
 - All the elements are stored in contiguous memory locations
 
@@ -56,14 +57,24 @@ It is process of updating element at given index.
 ```typescript
 const numArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-function updateAtIndex(arr: number[], index: number, value: number) {
+function updateByIndex(arr: number[], index: number, value: number) {
   arr[index] = value;
+}
+
+// Time: O(n)
+// Space: O(1)
+function updateByValue(arr: number[], oldValue: number, newValue: number) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === oldValue) {
+      arr[i] = newValue;
+    }
+  }
 }
 
 // Time: O(1)
 // Space: O(1)
 numArr[0] = 12; // update value at index 0
-updateAtIndex(numArr, 0, 12); // update value at index 0
+updateByIndex(numArr, 0, 12); // update value at index 0
 ```
 
 2. Accessing (Lookup)

@@ -102,22 +102,20 @@ It is a process of adding elements to the array.
 // Average Time: O(1) - Most cases just adds to end
 // Worst Time: O(n) - When array needs resizing/copying
 // Space: O(1) (amortized)
-function insertAtEnd<T>(arr: T[], element: T): T[] {
-  const newArr = [...arr];
-  newArr[newArr.length] = element;
-  return newArr;
+function push<T>(arr: T[], element: T): number {
+  arr[arr.length] = element;
+  return arr.length;
 }
 
 // 2. Insert at Beginning
 // Time: O(n) - Must move all existing elements
 // Space: O(n) - Creates new array
-function insertAtStart<T>(arr: T[], element: T): T[] {
-  const newArr = new Array(arr.length + 1);
-  newArr[0] = element;
-  for (let i = 0; i < arr.length; i++) {
-    newArr[i + 1] = arr[i];
+function unshift<T>(arr: T[], element: T): number {
+  for (let i = arr.length; i > 0; i--) {
+    arr[i] = arr[i - 1];
   }
-  return newArr;
+  arr[0] = element;
+  return arr.length;
 }
 
 // 3. Insert at Specific Index
@@ -148,19 +146,29 @@ It is a process of removing elements from the array.
 // 1. Remove from End
 // Time: O(1) - Just reduces length counter
 // Space: O(1) - No new allocation needed
-function removeFromEnd<T>(arr: T[]): T[] {
+function pop<T>(arr: T[]): T | undefined {
+  if (arr.length === 0) return undefined;
+  const last = arr[arr.length - 1];
   arr.length = arr.length - 1;
+  return last;
 }
 
 // 2. Remove from Beginning
 // Time: O(n) - Must move all remaining elements
 // Space: O(n) - Creates new array
-function removeFromStart<T>(arr: T[]): T[] {
-  const newArr = new Array(arr.length - 1);
-  for (let i = 1; i < arr.length; i++) {
-    newArr[i - 1] = arr[i];
+function shift<T>(arr: T[]): T | undefined {
+  if (arr.length === 0) return undefined;
+  const first = arr[0];
+
+  // copy from right to left
+  for (let i = 0; i < arr.length - 1; i++) {
+    arr[i] = arr[i + 1];
   }
-  return newArr;
+
+  // update array length
+  arr.length = arr.length - 1;
+
+  return first;
 }
 
 // 3. Remove from Specific Index
@@ -169,12 +177,17 @@ function removeFromStart<T>(arr: T[]): T[] {
 // Worst Case: O(n) - When removing from beginning
 function removeAtIndex<T>(arr: T[], index: number): T[] {
   const newArr = new Array(arr.length - 1);
+
+  // copy elements before index
   for (let i = 0; i < index; i++) {
     newArr[i] = arr[i];
   }
+
+  // move elements after index by one to left
   for (let i = index + 1; i < arr.length; i++) {
     newArr[i - 1] = arr[i];
   }
+
   return newArr;
 }
 ```

@@ -39,8 +39,8 @@ function getIndexByValue(arr: number[], element: number): number {}
 const numArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 console.log(
-  updateByIndex(numArr, 0, 10), // [10, 2, 3, 4, 5, 6, 7, 8, 9]
-  updateByValue(numArr, 10, 1) // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  getValueByIndex(numArr, 0, 10), // [10, 2, 3, 4, 5, 6, 7, 8, 9]
+  getIndexByValue(numArr, 10, 1) // [1, 2, 3, 4, 5, 6, 7, 8, 9]
 );
 ```
 

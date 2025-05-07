@@ -4,17 +4,17 @@
 - Array is a collection of items or elements
 - All the elements are stored in contiguous memory locations
 
-- Zero-Based Indexing → The first element is at index 0, not 1.
-- Contiguous Memory → Elements are stored back-to-back in memory.
-  - Let say that first element is stored at memory address of hexa decimal value 1000
-  - If we are storing numbers which is 4 byte next element will be 1000+4 = 1004 address
-  - Same formula for rest of the elements in array if you know memory address of one element you can find out their neighbors easily
-
 Important Terms:
 
 - Index: Position (starts at 0)
 - Element: Value at an index
 - Length: Number of items.
+
+- Zero-Based Indexing → The first element is at index 0, not 1.
+- Contiguous Memory → Elements are stored back-to-back in memory.
+  - Let say that first element is stored at memory address of hexa decimal value 1000
+  - If we are storing numbers which is 4 byte next element will be 1000+4 = 1004 address
+  - Same formula for rest of the elements in array if you know memory address of one element you can find out their neighbors easily
 
 Think of an array like a parking lot:
 
@@ -55,8 +55,8 @@ const twoDimArr = [
 It is process of updating element at given index.
 
 ```typescript
-const numArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+// Time: O(1)
+// Space: O(1)
 function updateByIndex(arr: number[], index: number, value: number) {
   arr[index] = value;
 }
@@ -70,11 +70,6 @@ function updateByValue(arr: number[], oldValue: number, newValue: number) {
     }
   }
 }
-
-// Time: O(1)
-// Space: O(1)
-numArr[0] = 12; // update value at index 0
-updateByIndex(numArr, 0, 12); // update value at index 0
 ```
 
 2. Accessing (Lookup)
@@ -82,21 +77,15 @@ updateByIndex(numArr, 0, 12); // update value at index 0
 It is a process of accessing element from the array.
 
 ```typescript
-// Time Complexity: O(1) - Direct access by index
-// Space Complexity: O(1) - No additional space needed
-const numArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-// 1. Direct Index Access
-// Time/Space: O(1)
-function getValueByIndex<T>(arr: T[], index: number): T | undefined {
+// Time: O(1)
+// Space: O(1)
+function getValueByIndex(arr: number[], index: number): number {
   return arr[index];
 }
 
-// 2. Linear Search by Value
-// Best Case: O(1) - Element is first in array
-// Average Case: O(n) - May need to check half the elements on average
-// Worst Case: O(n) - Element is last or not present
-function getIndexByValue<T>(arr: T[], element: T): number {
+// Time: O(n)
+// Space: O(1)
+function getIndexByValue(arr: number[], element: number): number {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] === element) return i;
   }
@@ -109,19 +98,16 @@ function getIndexByValue<T>(arr: T[], element: T): number {
 It is a process of adding elements to the array.
 
 ```typescript
-// 1. Insert at End
-// Average Time: O(1) - Most cases just adds to end
-// Worst Time: O(n) - When array needs resizing/copying
-// Space: O(1) (amortized)
-function push<T>(arr: T[], element: T): number {
+// Time: O(1)
+// Space: O(1)
+function insertAtEnd(arr: number[], element: number): number {
   arr[arr.length] = element;
   return arr.length;
 }
 
-// 2. Insert at Beginning
-// Time: O(n) - Must move all existing elements
-// Space: O(n) - Creates new array
-function unshift<T>(arr: T[], element: T): number {
+// Time: O(n)
+// Space: O(1)
+function insertAtBegining(arr: number[], element: number): number {
   for (let i = arr.length; i > 0; i--) {
     arr[i] = arr[i - 1];
   }
@@ -129,11 +115,9 @@ function unshift<T>(arr: T[], element: T): number {
   return arr.length;
 }
 
-// 3. Insert at Specific Index
-// Average Time: O(n) - Up to n elements may need shifting
-// Best Case: O(1) - When inserting at end
-// Worst Case: O(n) - When inserting at beginning
-function insertAtIndex<T>(arr: T[], index: number, element: T): T[] {
+// Time: O(n)
+// Space: O(1)
+function insertAtIndex(arr: number[], index: number, element: number) {
   const newArr = new Array(arr.length + 1);
 
   // process elements before index
@@ -144,8 +128,6 @@ function insertAtIndex<T>(arr: T[], index: number, element: T): T[] {
 
   // process elements after index
   for (let i = index; i < arr.length; i++) newArr[i + 1] = arr[i];
-
-  return newArr;
 }
 ```
 
@@ -154,21 +136,17 @@ function insertAtIndex<T>(arr: T[], index: number, element: T): T[] {
 It is a process of removing elements from the array.
 
 ```javascript
-// 1. Remove from End
-// Time: O(1) - Just reduces length counter
-// Space: O(1) - No new allocation needed
-function pop<T>(arr: T[]): T | undefined {
-  if (arr.length === 0) return undefined;
+// Time: O(1)
+// Space: O(1)
+function deleteAtEnd(arr: number[]): number {
   const last = arr[arr.length - 1];
   arr.length = arr.length - 1;
   return last;
 }
 
-// 2. Remove from Beginning
-// Time: O(n) - Must move all remaining elements
-// Space: O(n) - Creates new array
-function shift<T>(arr: T[]): T | undefined {
-  if (arr.length === 0) return undefined;
+// Time: O(n)
+// Space: O(1)
+function deleteAtBegining(arr: number[]): number {
   const first = arr[0];
 
   // copy from right to left
@@ -182,11 +160,9 @@ function shift<T>(arr: T[]): T | undefined {
   return first;
 }
 
-// 3. Remove from Specific Index
-// Average Time: O(n) - May need to shift up to n elements
-// Best Case: O(1) - When removing from end
-// Worst Case: O(n) - When removing from beginning
-function removeAtIndex<T>(arr: T[], index: number): T[] {
+// Time: O(n)
+// Space: O(1)
+function deleteAtIndex(arr: number[], index: number): number[] {
   const newArr = new Array(arr.length - 1);
 
   // copy elements before index
@@ -208,21 +184,20 @@ function removeAtIndex<T>(arr: T[], index: number): T[] {
 It is a process of finding elements in the array.
 
 ```javascript
-// 1. Linear Search (Unsorted Arrays)
-// Best Case: O(1) - First element matches
-// Average Case: O(n) - Checks ~n/2 elements on average
-// Worst Case: O(n) - Last element matches or not found
-function linearSearch<T>(arr: T[], target: T): number {
+// Time: O(n)
+// Space: O(1)
+function linearSearch(arr: number[], target: number): number {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] === target) return i;
   }
   return -1;
 }
 
-// 2. Binary Search (Sorted Arrays Only)
-// Time: O(log n) - Halves search space each iteration
-// Space: O(1) - Uses constant space
+// Time: O(n log n)
+// Space: O(1)
 function binarySearch(arr: number[], target: number): number {
+  arr.sort((a, b) => a - b); // asc
+
   let left = 0;
   let right = arr.length - 1;
 
@@ -236,7 +211,3 @@ function binarySearch(arr: number[], target: number): number {
   return -1;
 }
 ```
-
-5. Sorting
-
-- Coming Soon

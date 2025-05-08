@@ -16,7 +16,7 @@ function quickSort(arr: number[]): number[] {
   if (arr.length <= 1) return arr;
 
   // divide
-  const pivot = arr[0];
+  const pivot = arr[0]!;
 
   // conquer: solve left and right array
   const left: number[] = arr.filter((num) => num < pivot);

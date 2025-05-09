@@ -24,9 +24,10 @@ function bubbleSort(numArr: number[]): number[] {
     // compare two people in line
     // with each pass last i elements are sorted already
     // to prevent going outof index bound we need len - 1
-    for (let j = i; j < len - i - 1; j++) {
-      if (numArr[i] > numArr[i + 1]) {
-        [numArr[i], numArr[i + 1]] = [numArr[i + 1], numArr[i]];
+    for (let j = 0; j < n - i - 1; j++) {
+      if (sortedArr[j] > sortedArr[j + 1]) {
+        // Swap if they're in the wrong order
+        [sortedArr[j], sortedArr[j + 1]] = [sortedArr[j + 1], sortedArr[j]];
       }
     }
   }

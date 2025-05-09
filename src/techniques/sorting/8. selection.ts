@@ -24,7 +24,7 @@ function selectionSort(numArr: number[]): number[] {
     // You look through all the cards to find the smallest one
     for (let j = i + 1; j < len; j++) {
       if (numArr[smallest] > numArr[j]) {
-        smallest = numArr[j];
+        smallest = i;
       }
     }
 

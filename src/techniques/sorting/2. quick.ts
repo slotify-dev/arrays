@@ -13,15 +13,23 @@
  * Space Complexity: O(log n) (due to recursion stack)
  */
 function quickSort(arr: number[]): number[] {
-  if (arr.length <= 1) return arr;
+  // Base case: arrays with 0 or 1 element are already sorted
+  if (arr.length <= 1) {
+    return arr;
+  }
 
-  // divide
-  const pivot = arr[0]!;
+  // Choose a pivot (here we pick the first element)
+  const pivot = arr[0];
 
-  // conquer: solve left and right array
-  const left: number[] = arr.filter((num) => num < pivot);
-  const right: number[] = arr.filter((num) => num > pivot);
+  // Divide: Partition into left (<= pivot) and right (> pivot) using filter
+  const left = arr.filter((x) => x < pivot);
+  const right = arr.filter((x) => x > pivot);
+  const equal = arr.filter((x) => x === pivot); // Handles duplicates
 
-  // combine: combine left, pivot and right array elements
-  return [...quickSort(left), pivot, ...quickSort(right)];
+  // Conquer: Recursively sort left and right
+  const sortedLeft = quickSort(left);
+  const sortedRight = quickSort(right);
+
+  // Combine: Concatenate left + equal + right
+  return [...sortedLeft, ...equal, ...sortedRight];
 }

@@ -24,12 +24,11 @@ function quickSort(arr: number[]): number[] {
   // Divide: Partition into left (<= pivot) and right (> pivot) using filter
   const left = arr.filter((x) => x < pivot);
   const right = arr.filter((x) => x > pivot);
-  const equal = arr.filter((x) => x === pivot); // Handles duplicates
 
   // Conquer: Recursively sort left and right
   const sortedLeft = quickSort(left);
   const sortedRight = quickSort(right);
 
   // Combine: Concatenate left + equal + right
-  return [...sortedLeft, ...equal, ...sortedRight];
+  return [...sortedLeft, ...pivot, ...sortedRight];
 }

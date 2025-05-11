@@ -21,6 +21,8 @@ function quickSort(arr: number[]): number[] {
   // Choose a pivot (here we pick the first element)
   const pivot = arr[0];
 
+  // 2 calls per level = log n levels
+  // n comparisons per level = n log n
   // Divide: Partition into left (<= pivot) and right (> pivot) using filter
   const left = arr.filter((x) => x < pivot);
   const right = arr.filter((x) => x > pivot);

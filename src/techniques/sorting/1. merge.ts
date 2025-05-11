@@ -26,6 +26,9 @@ function mergeSort(arr: number[]): number[] {
   return merge(leftArr, rightArr); // O(n)
 }
 
+// m = n becase we are merging same arrays
+// time: O(m + n), where m and n are the lengths of the two arrays
+// space: O(m + n), where m and n are the lengths of the two arrays
 function merge(leftArr: number[], rightArr: number[]): number[] {
   let i = 0;
   let j = 0;

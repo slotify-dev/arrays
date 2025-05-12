@@ -1,9 +1,7 @@
 // 1. Sum of Array Elements
 function sumArray(arr: number[]): number {
   // Base case: if the array is empty, return 0
-  if (arr.length === 0) {
-    return 0;
-  }
+  if (arr.length <= 0) return 0;
 
   // Recursive case: first element + sum of the rest
   return arr[0] + sumArray(arr.slice(1));
@@ -16,7 +14,7 @@ console.log(sumArray([-1, 0, 1])); // 0 (valid - negative numbers)
 // 2. Product of Array Elements
 function findMaximum(arr: number[]): number {
   // Base case: when array has single element
-  if (arr.length === 1) return arr[0];
+  if (arr.length <= 0) return 0;
 
   // compare it with the maximum of the rest of the array
   return Math.max(arr[0], findMaximum(arr.slice(1)));

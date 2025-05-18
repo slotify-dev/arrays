@@ -16,8 +16,8 @@
  *  - Space:
  *      - O(1): Sorts in-place, no extra memory needed
  */
-function bubbleSort(numArr: number[]): number[] {
-  const len = numArr.length;
+function bubbleSort(arr: number[]): number[] {
+  const len = arr.length;
 
   // imagine line of people with different heights
   for (let i = 0; i < len; i++) {
@@ -25,12 +25,12 @@ function bubbleSort(numArr: number[]): number[] {
     // with each pass last i elements are sorted already
     // to prevent going outof index bound we need len - 1
     for (let j = 0; j < n - i - 1; j++) {
-      if (sortedArr[j] > sortedArr[j + 1]) {
+      if (arr[j] > arr[j + 1]) {
         // Swap if they're in the wrong order
-        [sortedArr[j], sortedArr[j + 1]] = [sortedArr[j + 1], sortedArr[j]];
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
       }
     }
   }
 
-  return numArr;
+  return arr;
 }

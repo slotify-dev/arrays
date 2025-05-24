@@ -85,6 +85,7 @@ Weaknesses
 */
 function hash3(key: string, tableSize: number): number {
   let hash = 0;
+  // Same as: hash = (hash * PRIME + key.charCodeAt(i)) % tableSize;
   for (let i = 0; i < key.length; i++) {
     const char = keyString.charCodeAt(i);
     hash = (hash << 5) - hash + char;
